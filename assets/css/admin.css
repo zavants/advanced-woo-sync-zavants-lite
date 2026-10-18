@@ -1,0 +1,679 @@
+/* Admin Styles for Sync WooCommerce Orders */
+
+:root {
+    /* Theme Variables (Adapted) */
+    --swos-body-color: #3C434A;
+    --swos-heading-color: rgba(16, 16, 16, .8);
+    --swos-primary-color: #007CBA;
+    --swos-primary-color-rgb: 0, 124, 186;
+    --swos-group-bg-color: #F7F7F7;
+    --swos-box-bg-color: #ffffff;
+    --swos-group-sp: 20px;
+    --swos-brd-radius: 5px;
+    --swos-option-border-color: rgba(16, 16, 16, .08);
+    --swos-option-border-color-darker-10: rgba(16, 16, 16, .1);
+    --swos-option-border-radius: 4px;
+    --swos-input-height: 35px;
+    --swos-box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
+    --swos-option-box-shadow: 0 2px 4px rgba(0, 0, 0, .035);
+
+    /* Button Colors */
+    --swos-btn-primary-color: #2271B1;
+    --swos-btn-primary-hover: #135E96;
+
+    /* Status Colors */
+    --swos-success-color: #46b450;
+    --swos-error-color: #dc3232;
+    --swos-warning-color: #ffb900;
+}
+
+/* Wrapper */
+.swos-admin-wrapper {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #c3c4c7;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+    border-radius: var(--swos-brd-radius);
+    margin-top: 0;
+    position: relative;
+    color: var(--swos-body-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+.swos-admin-wrapper h1,
+.swos-admin-wrapper h2,
+.swos-admin-wrapper h3 {
+    color: var(--swos-heading-color);
+    margin-top: 20px;
+}
+
+/* Main Form Table - Clean */
+/* Main Form Table - Clean */
+/* Main Form Table - Clean */
+.swos-admin-wrapper .form-table {
+    margin-top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: table;
+}
+
+/* Generic Box Style for Diagnostics */
+.swos-box {
+    background-color: var(--swos-box-bg-color);
+    padding: var(--swos-group-sp);
+    border-radius: var(--swos-brd-radius);
+    box-shadow: var(--swos-box-shadow);
+    border: 1px solid var(--swos-option-border-color);
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.swos-p-15 {
+    padding: 15px !important;
+}
+
+.swos-mt-0 {
+    margin-top: 0 !important;
+}
+
+.swos-mt-20 {
+    margin-top: 20px !important;
+}
+
+.swos-mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.swos-mb-15 {
+    margin-bottom: 15px !important;
+}
+
+.swos-my-5 {
+    margin-top: 5px !important;
+    margin-bottom: 5px !important;
+}
+
+.swos-my-10 {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+.swos-my-20 {
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+}
+
+.swos-no-margin {
+    margin: 0 !important;
+}
+
+/* Info Boxes */
+.swos-info-box {
+    padding: 15px;
+    border-left: 4px solid #2271b1;
+    background: #e7f5fe;
+}
+
+.swos-info-success {
+    border-left-color: #46b450;
+    background: #e7f7e7;
+}
+
+.swos-info-error {
+    border-left-color: #dc3232;
+    background: #ffe7e7;
+}
+
+.swos-warning-box {
+    border-left-color: #ffb900;
+    background: #fff3cd;
+}
+
+/* Spinner */
+.swos-spinner {
+    float: none;
+    margin-left: 10px;
+}
+
+/* Add padding to the table cells to simulate box padding since table padding is tricky */
+.swos-admin-wrapper .form-table th,
+.swos-admin-wrapper .form-table td {
+    padding: 20px;
+    border-bottom: 1px solid var(--swos-option-border-color);
+}
+
+.swos-admin-wrapper .form-table tr:last-child th,
+.swos-admin-wrapper .form-table tr:last-child td {
+    border-bottom: none;
+}
+
+.swos-admin-wrapper .form-table h2 {
+    font-size: 1.2em;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Section Headings within Table */
+.swos-admin-wrapper .form-table th[colspan="2"] {
+    background-color: var(--swos-group-bg-color);
+    border-bottom: 1px solid var(--swos-option-border-color);
+    padding: 15px 20px;
+    border-radius: var(--swos-brd-radius) var(--swos-brd-radius) 0 0;
+}
+
+/* Fix Info Box Lists */
+.swos-info-box ul.swos-no-margin,
+.swos-info-box ul {
+    margin: 0 !important;
+    padding-left: 20px;
+    /* Restore bullets */
+}
+
+
+
+/* Inputs & Selects */
+.swos-admin-wrapper input[type=text],
+.swos-admin-wrapper input[type=url],
+.swos-admin-wrapper input[type=password],
+.swos-admin-wrapper input[type=number],
+.swos-admin-wrapper select {
+    height: var(--swos-input-height);
+    border: 1px solid var(--swos-option-border-color);
+    border-radius: var(--swos-option-border-radius);
+    box-shadow: var(--swos-option-box-shadow);
+    color: var(--swos-body-color);
+}
+
+.swos-admin-wrapper input:focus,
+.swos-admin-wrapper select:focus {
+    border-color: var(--swos-primary-color);
+    box-shadow: 0 0 0 1px var(--swos-primary-color);
+}
+
+/* Descriptions */
+.swos-admin-wrapper .description {
+    color: #666;
+    margin-top: 8px;
+    font-style: normal;
+}
+
+/* Helper Classes */
+.swos-w-100 {
+    width: 100px !important;
+}
+
+.swos-w-150 {
+    width: 150px !important;
+}
+
+.swos-w-300 {
+    width: 300px !important;
+}
+
+.swos-min-w-350 {
+    min-width: 350px !important;
+}
+
+.swos-mt-10 {
+    margin-top: 10px !important;
+}
+
+.swos-mt-15 {
+    margin-top: 15px !important;
+}
+
+.swos-mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.swos-ml-5 {
+    margin-left: 5px !important;
+}
+
+.swos-ml-10 {
+    margin-left: 10px !important;
+}
+
+.swos-mr-5 {
+    margin-right: 5px !important;
+}
+
+.swos-text-primary {
+    color: var(--swos-primary-color) !important;
+}
+
+.swos-text-success {
+    color: var(--swos-success-color) !important;
+}
+
+.swos-text-error {
+    color: var(--swos-error-color) !important;
+}
+
+.swos-text-warning {
+    color: var(--swos-warning-color) !important;
+}
+
+.swos-fw-bold {
+    font-weight: bold;
+}
+
+.swos-icon-align {
+    vertical-align: middle;
+}
+
+.swos-inline-form {
+    display: inline;
+}
+
+.swos-hidden {
+    display: none;
+}
+
+.swos-role-list {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.swos-opacity-50 {
+    opacity: 0.5;
+}
+
+.swos-opacity-100 {
+    opacity: 1;
+}
+
+/* Navigation Tabs - Styling to match */
+.swos-nav-tabs.nav-tab-wrapper {
+    border-bottom: none !important;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    margin: 0 !important;
+    /* Force zero margin to override WP/Woo defaults */
+    padding-left: 10px;
+    /* Shift tabs slightly right to not sit on edge */
+}
+
+.swos-nav-tabs .nav-tab {
+    background: #e5e5e5;
+    border: 1px solid var(--swos-option-border-color);
+    border-bottom: none;
+    /* Let the wrapper border handle it until active */
+    color: var(--swos-body-color);
+    margin-right: 5px;
+    border-radius: 4px 4px 0 0;
+    transition: none;
+    /* Remove transition to prevent jumping */
+    margin-bottom: 0;
+}
+
+.swos-nav-tabs .nav-tab-active {
+    background: var(--swos-box-bg-color);
+    color: var(--swos-primary-color);
+    border-bottom: 1px solid var(--swos-box-bg-color) !important;
+    border-color: #087cba;
+    margin-bottom: -1px;
+    /* Pull down to sit ON the border */
+    position: relative;
+    font-weight: 600;
+    z-index: 2;
+    /* Ensure it sits above wrapper */
+}
+
+.swos-nav-tabs .nav-tab:hover:not(.nav-tab-active) {
+    background-color: #f0f0f0;
+    color: var(--swos-primary-color);
+}
+
+/* Test Connection Box - Make it look like a nested card or alert */
+.swos-test-connection {
+    background: #f9f9f9;
+    border: 1px solid var(--swos-option-border-color);
+    padding: 20px;
+    border-radius: var(--swos-option-border-radius);
+    margin-top: 0px;
+}
+
+#swos-test-results {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: var(--swos-option-border-radius);
+}
+
+#swos-test-results.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+#swos-test-results.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+/* Logs Filter */
+.swos-logs-filter {
+    background-color: var(--swos-box-bg-color);
+    padding: 20px;
+    border-radius: var(--swos-brd-radius);
+    box-shadow: var(--swos-box-shadow);
+    border: 1px solid var(--swos-option-border-color);
+    margin: 20px 0;
+}
+
+/* Log Levels */
+.swos-log-level {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.swos-log-info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.swos-log-success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.swos-log-warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.swos-log-error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* License Page Styles */
+.swos-license-page .form-table {
+    /* Re-apply box style if license page uses form-table */
+    background-color: var(--swos-box-bg-color);
+    padding: var(--swos-group-sp);
+    border-radius: var(--swos-brd-radius);
+    box-shadow: var(--swos-box-shadow);
+    border: 1px solid var(--swos-option-border-color);
+}
+
+.swos-license-help {
+    background: #fff;
+    padding: 20px;
+    margin-top: 30px;
+    border-left: 4px solid var(--swos-primary-color);
+    box-shadow: var(--swos-box-shadow);
+    border-radius: var(--swos-brd-radius);
+}
+
+/* Buttons */
+.button.button-primary {
+    background: var(--swos-btn-primary-color);
+    border-color: var(--swos-btn-primary-color);
+    transition: all 0.2s ease;
+}
+
+.button.button-primary:hover {
+    background: var(--swos-btn-primary-hover);
+    border-color: var(--swos-btn-primary-hover);
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-primary,
+.wp-core-ui .button-secondary {
+    padding: 3px 20px;
+}
+
+/* Table layout overrides for Settings page */
+.woocommerce table.form-table {
+    margin: 0;
+    position: relative;
+    table-layout: auto !important;
+    display: table;
+}
+
+/* Sync Process Styles */
+.swos-progress-bar-container {
+    width: 100%;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 20px 0;
+    height: 30px;
+    position: relative;
+}
+
+#swos-progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #2271b1, #135e96);
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#swos-progress-percentage {
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.swos-logfile {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+/* Tab Visibility Logic (Migrated from inline) */
+.swos-tab-section {
+    display: none;
+}
+
+.swos-tab-section.swos-tab-active {
+    display: table-row-group;
+    /* Ensure table-row-group display for proper TBODY rendering */
+}
+
+.woocommerce nav.woo-nav-tab-wrapper {
+    margin: 0px !important;
+}
+
+/* Header styling for subpages */
+.swos-header {
+    margin-bottom: 16px;
+}
+
+/* Exclude header margin on main settings page (tabs handle spacing) */
+.toplevel_page_woo-sync-adv .swos-header {
+    margin-bottom: 0;
+}
+
+/* Additional Table Styles */
+table.wp-list-table.widefat.fixed.striped.table-view-list.logs {
+    margin-top: 20px;
+}
+
+form#logs-filter {
+    margin-bottom: 20px;
+}
+
+.wp-core-ui .button,
+.wp-core-ui .button-primary,
+.wp-core-ui .button-secondary {
+    padding: 2px 20px;
+}
+
+.swos-admin-wrapper .form-table th[colspan="2"] {
+    background-color: #f0f0f100;
+}
+
+/* Footer Styling */
+.swos-footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    color: #666;
+    font-size: 12px;
+}
+
+.swos-footer p {
+    margin: 0;
+}
+
+/* ============================================
+   SWOS Sync Column Styles (Orders List)
+   ============================================ */
+
+/* Center align the column header and content */
+th#swos_sync_status,
+td.swos_sync_status.column-swos_sync_status {
+    text-align: center;
+}
+
+/* Container for sync status cell */
+.swos-sync-status {
+    line-height: 1.4;
+    display: inline-block;
+    text-align: left;
+    /* Keep internal content left-aligned or center? "desalineado" might imply center everything */
+    /* Let's keep internal content generally aligned as a block, but the cell is centered. 
+       If the user wants strict alignment, maybe text-align: left inside the inline-block is safer 
+       so icon and text align relative to each other, while the block itself is centered in the cell.
+       But let's remove strict text-align on the container to inherit or default, 
+       and rely on the cell centering. */
+}
+
+/* Icon base style */
+.swos-sync-status .swos-sync-icon {
+    font-size: 18px;
+    vertical-align: middle;
+    margin-right: 3px;
+    /* Ensure icon doesn't float weirdly */
+    display: inline-block;
+}
+
+/* ID text style */
+.swos-sync-id {
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+/* Label text style (second line) */
+.swos-sync-label {
+    display: block;
+    /* Forces new line */
+    font-size: 11px;
+    margin-top: 2px;
+    font-style: italic;
+    color: #666;
+    line-height: 1.2;
+}
+
+/* Sent to Remote - Green theme */
+.swos-sync-status.swos-sync-sent .swos-sync-icon,
+.swos-sync-status.swos-sync-sent .swos-sync-id {
+    color: var(--swos-success-color);
+}
+
+/* Received from Remote - Green theme (Unified) */
+.swos-sync-status.swos-sync-received .swos-sync-icon,
+.swos-sync-status.swos-sync-received .swos-sync-id {
+    color: var(--swos-success-color);
+    /* Changed to Green as requested */
+}
+
+/* Not synced - Gray theme */
+.swos-sync-status.swos-sync-none .swos-sync-icon {
+    color: #818285;
+}
+
+/* No order fallback */
+.swos-sync-status.swos-sync-invalid .swos-sync-icon {
+    color: #999;
+}
+/* ===== Lite: Premium upsell ===== */
+.swos-pro-badge {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 0 6px;
+    border-radius: 3px;
+    background: #dba617;
+    color: #1d2327;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 18px;
+    vertical-align: middle;
+}
+
+.swos-premium-cta {
+    max-width: 560px;
+    margin: 10px 0 20px;
+    padding: 24px 28px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-left: 4px solid #dba617;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    font-weight: normal;
+}
+
+.swos-premium-cta h2 {
+    margin: 8px 0;
+}
+
+.swos-premium-cta ul {
+    margin: 12px 0 18px;
+}
+
+.swos-premium-cta li {
+    margin: 4px 0;
+}
+
+.swos-locked {
+    position: relative;
+    min-height: 480px;
+    overflow: hidden;
+}
+
+.swos-locked-preview {
+    display: block;
+    width: 100%;
+    max-width: 1100px;
+    filter: blur(2px) grayscale(40%);
+    opacity: .45;
+    pointer-events: none;
+    user-select: none;
+}
+
+.swos-locked .swos-premium-cta {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+}
+
+.swos-locked-section tr:not(:first-child) {
+    opacity: .5;
+    pointer-events: none;
+}
