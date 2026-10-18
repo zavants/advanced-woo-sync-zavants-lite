@@ -14,21 +14,11 @@ Real-time stock synchronization between two WooCommerce stores, by product categ
 
 Advanced Woo Sync Lite keeps the stock of one product category in sync between two WooCommerce stores, in real time, matching products by SKU.
 
-**Lite features**
-
 * Connect two WooCommerce stores (Central / Remote roles) with the WooCommerce REST API.
 * Real-time stock sync (quantity, stock status, backorders) for the products of one category.
 * Up to 50 products (a variable product and its variations count as one).
 * Simple and variable products, background processing with Action Scheduler and automatic retries.
 * Loop protection and stock logs.
-
-**Premium features**
-
-* Unlimited products, sync by SKU, tag, category or the whole catalog.
-* Bidirectional order sync with status triggers, price adjustments, coupons and customer mapping.
-* Mass stock sync, stock comparison between stores, diagnostics and order logs.
-
-[Get Premium](https://zavants.com/plugin-advanced-woo-sync)
 
 == Installation ==
 
@@ -41,11 +31,7 @@ Advanced Woo Sync Lite keeps the stock of one product category in sync between t
 
 = What happens with the 51st product? =
 
-Its stock changes are not synced and a notice is shown in the admin. Free the slots from the Stock Synchronization tab or upgrade to Premium.
-
-= Can I upgrade without losing my settings? =
-
-Yes. Premium uses the same settings. Install and activate Premium; Lite stays inactive while Premium is active, and can then be removed.
+Its stock changes are not synced and a notice is shown in the admin. Free the slots from the Stock Synchronization tab.
 
 == Changelog ==
 
