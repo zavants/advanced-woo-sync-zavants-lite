@@ -227,8 +227,8 @@ class Stock_Sync {
                 $product_id, $sku, $reason, $attempt + 1, self::MAX_RETRIES, $delay), 0, array('source' => 'stock_sync'));
         }
 
-        throw new \Exception(sprintf('Stock sync failed for product #%d (SKU: %s): %s', $product_id, $sku,
-            isset($result['message']) ? $result['message'] : $reason));
+        throw new \Exception(esc_html(sprintf('Stock sync failed for product #%d (SKU: %s): %s', $product_id, $sku,
+            isset($result['message']) ? $result['message'] : $reason)));
     }
 
     /**

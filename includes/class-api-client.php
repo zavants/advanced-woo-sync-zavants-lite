@@ -55,7 +55,7 @@ class API_Client {
         );
 
         if ($method !== 'GET' && !empty($data)) {
-            $args['body'] = json_encode($data);
+            $args['body'] = wp_json_encode($data);
         }
 
         $response = wp_remote_request($url, $args);
@@ -105,7 +105,7 @@ class API_Client {
      * Get product by SKU
      */
     public function get_product_by_sku($sku) {
-        $result = $this->request('products?sku=' . urlencode($sku));
+        $result = $this->request('products?sku=' . rawurlencode($sku));
 
         if (is_wp_error($result)) {
             return false;
@@ -170,7 +170,7 @@ class API_Client {
      * Get customer by email
      */
     public function get_customer_by_email($email) {
-        $result = $this->request('customers?email=' . urlencode($email));
+        $result = $this->request('customers?email=' . rawurlencode($email));
 
         if (is_wp_error($result)) {
             return false;
@@ -230,7 +230,7 @@ class API_Client {
                 'Authorization' => $this->get_auth_header(),
                 'Content-Type' => 'application/json',
             ),
-            'body' => json_encode(array('skus' => array_values($skus))),
+            'body' => wp_json_encode(array('skus' => array_values($skus))),
         );
 
         Logger::log('debug', sprintf('Attempting bulk call to: %s with %d SKUs', $url, count($skus)), 0, array('source' => 'api_client'));

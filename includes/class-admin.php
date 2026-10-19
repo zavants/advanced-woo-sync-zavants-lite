@@ -186,7 +186,7 @@ class Admin {
      * Locked Premium page (mockup + Buy Premium)
      */
     public function locked_page() {
-        $slug = isset($_GET['page']) ? sanitize_key($_GET['page']) : '';
+        $slug = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- admin page slug.
         Premium::render_locked_page($slug);
     }
 
@@ -195,7 +195,7 @@ class Admin {
      */
     public function handle_reset_slots() {
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('You do not have permission to perform this action.', 'advanced-woo-sync-lite'));
+            wp_die(esc_html__('You do not have permission to perform this action.', 'advanced-woo-sync-lite'));
         }
         check_admin_referer('swos_lite_reset_slots');
 
@@ -215,6 +215,7 @@ class Admin {
         printf(
             '<div class="notice notice-warning"><p><strong>%1$s</strong> %2$s <a href="%3$s" class="button button-primary" target="_blank" rel="noopener">%4$s</a></p></div>',
             esc_html__('Advanced Woo Sync Lite:', 'advanced-woo-sync-lite'),
+            /* translators: %d: maximum products */
             esc_html(sprintf(__('the limit of %d synced products has been reached. Stock changes in other products are not being synced.', 'advanced-woo-sync-lite'), SWOS_LITE_MAX_PRODUCTS)),
             esc_url(Premium::url('limit_notice')),
             esc_html__('Buy Premium (unlimited)', 'advanced-woo-sync-lite')
@@ -231,25 +232,20 @@ class Admin {
      * AJAX handler to generate test logs
      */
     public function ajax_test_log() {
-        error_log('SWOS ajax_test_log: Handler called');
 
         // Verify nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'swos-test-log')) {
-            error_log('SWOS ajax_test_log: Nonce verification failed');
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'swos-test-log')) {
             wp_send_json_error(array('message' => __('Security verification failed.', 'advanced-woo-sync-lite')));
             return;
         }
 
-        error_log('SWOS ajax_test_log: Nonce verified successfully');
 
         // Check permissions
         if (!current_user_can('manage_woocommerce')) {
-            error_log('SWOS ajax_test_log: User does not have manage_woocommerce capability');
             wp_send_json_error(array('message' => __('You do not have permission to perform this action.', 'advanced-woo-sync-lite')));
             return;
         }
 
-        error_log('SWOS ajax_test_log: Permissions verified, generating test logs');
 
         // Generate test logs
         $timestamp = current_time('mysql');
@@ -259,7 +255,6 @@ class Admin {
         Logger::log('warning', 'Test log WARNING - ' . $timestamp);
         Logger::log('error', 'Test log ERROR - ' . $timestamp);
 
-        error_log('SWOS ajax_test_log: 5 test logs generated successfully');
 
         wp_send_json_success(array(
             'message' => __('✅ Generated 5 test logs (DEBUG, INFO, SUCCESS, WARNING, ERROR). Reload the page to see them.', 'advanced-woo-sync-lite')
@@ -271,7 +266,7 @@ class Admin {
      */
     public function ajax_clear_logs() {
         // Verify nonce
-        if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'swos-clear-logs')) {
+        if (!isset($_POST['nonce']) || !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['nonce'])), 'swos-clear-logs')) {
             wp_send_json_error(array('message' => __('Security verification failed. Please reload the page and try again.', 'advanced-woo-sync-lite')));
             return;
         }
@@ -282,7 +277,7 @@ class Admin {
             return;
         }
 
-        $log_type = isset($_POST['log_type']) ? sanitize_text_field($_POST['log_type']) : 'all';
+        $log_type = isset($_POST['log_type']) ? sanitize_key(wp_unslash($_POST['log_type'])) : 'all';
 
         // Clear log files
         $result = Logger::clear_logs($log_type);
@@ -290,6 +285,7 @@ class Admin {
         if ($result['deleted'] > 0) {
             wp_send_json_success(array(
                 'message' => sprintf(
+                    /* translators: %d: number of deleted files */
                     __('Successfully deleted %d log file(s).', 'advanced-woo-sync-lite'),
                     $result['deleted']
                 )
@@ -318,9 +314,9 @@ class Admin {
         $settings = get_option('swos_settings');
 
         // Override with POST data if available (allows testing before saving)
-        if (!empty($_POST['url'])) $settings['remote_store_url'] = esc_url_raw($_POST['url']);
-        if (!empty($_POST['key'])) $settings['remote_store_consumer_key'] = sanitize_text_field($_POST['key']);
-        if (!empty($_POST['secret'])) $settings['remote_store_consumer_secret'] = sanitize_text_field($_POST['secret']);
+        if (!empty($_POST['url'])) $settings['remote_store_url'] = esc_url_raw(wp_unslash($_POST['url']));
+        if (!empty($_POST['key'])) $settings['remote_store_consumer_key'] = sanitize_text_field(wp_unslash($_POST['key']));
+        if (!empty($_POST['secret'])) $settings['remote_store_consumer_secret'] = sanitize_text_field(wp_unslash($_POST['secret']));
 
         if (empty($settings['remote_store_url']) || empty($settings['remote_store_consumer_key']) || empty($settings['remote_store_consumer_secret'])) {
             wp_send_json_error(array('message' => __('Please complete all connection fields.', 'advanced-woo-sync-lite')));
@@ -336,6 +332,7 @@ class Admin {
         $test_result = $api_client->request('system_status');
 
         if (is_wp_error($test_result)) {
+            /* translators: %s: error message */
             wp_send_json_error(array('message' => sprintf(__('Connection error: %s', 'advanced-woo-sync-lite'), $test_result->get_error_message())));
         }
 
@@ -357,7 +354,8 @@ class Admin {
         
         $response_code = wp_remote_retrieve_response_code($remote_role_response);
         if ($response_code !== 200) {
-             wp_send_json_error(array('message' => sprintf(__('Remote plugin endpoint check failed (HTTP %d). Please ensure the plugin is active on the remote site.', 'advanced-woo-sync-lite'), $response_code)));
+            /* translators: %d: HTTP status code */
+            wp_send_json_error(array('message' => sprintf(__('Remote plugin endpoint check failed (HTTP %d). Please ensure the plugin is active on the remote site.', 'advanced-woo-sync-lite'), $response_code)));
         }
 
         $remote_data = json_decode(wp_remote_retrieve_body($remote_role_response), true);
@@ -380,7 +378,8 @@ class Admin {
             $remote_url = untrailingslashit($settings['remote_store_url']);
 
             wp_send_json_success(array('message' => sprintf(
-                __('Connection established successfully. Local store: %s (%s), Remote store: %s (%s)', 'advanced-woo-sync-lite'),
+                /* translators: 1: local store role, 2: local store URL, 3: remote store role, 4: remote store URL */
+                __('Connection established successfully. Local store: %1$s (%2$s), Remote store: %3$s (%4$s)', 'advanced-woo-sync-lite'),
                 strtoupper($local_role),
                 $local_url,
                 strtoupper($remote_role),
@@ -532,6 +531,7 @@ class Admin {
         ));
 
         if (!$product_id) {
+            /* translators: %s: product SKU */
             return new \WP_Error('product_not_found', sprintf(__('Product with SKU "%s" not found', 'advanced-woo-sync-lite'), $sku), array('status' => 404));
         }
 
@@ -606,6 +606,7 @@ class Admin {
 
         // Direct postmeta search (non-standard statuses must still be found), excluding trashed
         // products and revisions. Published products come first so they win on duplicated SKUs.
+        // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare -- $placeholders is a list of %s, one per SKU.
         $query = $wpdb->prepare(
             "SELECT pm.post_id, pm.meta_value as sku
              FROM {$wpdb->postmeta} pm
@@ -616,8 +617,9 @@ class Admin {
              ORDER BY (p.post_status = 'publish') DESC, pm.post_id ASC",
             ...$skus
         );
+        // phpcs:enable
 
-        $results = $wpdb->get_results($query);
+        $results = $wpdb->get_results($query); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- prepared above.
 
         $response = array();
 
@@ -678,10 +680,13 @@ class Admin {
         <div class="swos-footer">
             <?php do_action('swos_before_admin_footer'); ?>
             <p>
-                <strong><?php _e('Advanced Woo Sync Lite', 'advanced-woo-sync-lite'); ?></strong> -
-                <?php printf(__('Version %s', 'advanced-woo-sync-lite'), SWOS_VERSION); ?> -
-                <?php _e('Developed by Zavants', 'advanced-woo-sync-lite'); ?> -
-                <a href="<?php echo esc_url(Premium::url('footer')); ?>" target="_blank" rel="noopener"><?php _e('Buy Premium', 'advanced-woo-sync-lite'); ?></a>
+                <strong><?php esc_html_e('Advanced Woo Sync Lite', 'advanced-woo-sync-lite'); ?></strong> -
+                <?php
+                /* translators: %s: plugin version */
+                echo esc_html(sprintf(__('Version %s', 'advanced-woo-sync-lite'), SWOS_VERSION));
+                ?> -
+                <?php esc_html_e('Developed by Zavants', 'advanced-woo-sync-lite'); ?> -
+                <a href="<?php echo esc_url(Premium::url('footer')); ?>" target="_blank" rel="noopener"><?php esc_html_e('Buy Premium', 'advanced-woo-sync-lite'); ?></a>
             </p>
             <?php do_action('swos_after_admin_footer'); ?>
         </div>

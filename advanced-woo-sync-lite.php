@@ -8,7 +8,6 @@
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: advanced-woo-sync-lite
- * Domain Path: /languages
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * WC requires at least: 6.0
@@ -73,7 +72,7 @@ if (!in_array('woocommerce/woocommerce.php', $swos_active_plugins, true)) {
 function swos_woocommerce_missing_notice() {
     ?>
     <div class="error">
-        <p><?php _e('Advanced Woo Sync Lite requires WooCommerce to be installed and activated.', 'advanced-woo-sync-lite'); ?></p>
+        <p><?php esc_html_e('Advanced Woo Sync Lite requires WooCommerce to be installed and activated.', 'advanced-woo-sync-lite'); ?></p>
     </div>
     <?php
 }
@@ -100,7 +99,9 @@ function swos_is_wc_rest_request($is_request_to_rest_api) {
     }
 
     // Plain permalinks: ?rest_route=/swos/v1/...
-    if (isset($_GET['rest_route']) && is_string($_GET['rest_route']) && strpos(wp_unslash($_GET['rest_route']), '/swos/v1/') === 0) {
+    // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only routing check, no state change.
+    $rest_route = isset($_GET['rest_route']) && is_string($_GET['rest_route']) ? sanitize_text_field(wp_unslash($_GET['rest_route'])) : '';
+    if ($rest_route !== '' && strpos($rest_route, '/swos/v1/') === 0) {
         return true;
     }
 
