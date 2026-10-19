@@ -93,7 +93,7 @@ class Logger {
                     $log_message = "[Order #{$order_id}] " . $log_message;
                 }
                 if (!empty($context)) {
-                    $log_message .= ' | Context: ' . json_encode($context);
+                    $log_message .= ' | Context: ' . wp_json_encode($context);
                 }
 
                 try {
@@ -392,7 +392,8 @@ class Logger {
             $order_files = self::get_order_log_files();
             foreach ($order_files as $file) {
                 if (file_exists($file['path'])) {
-                    if (@unlink($file['path'])) {
+                    wp_delete_file($file['path']);
+                    if (!file_exists($file['path'])) {
                         $deleted++;
                     } else {
                         $errors[] = 'Could not delete: ' . $file['filename'];
@@ -405,7 +406,8 @@ class Logger {
             $stock_files = self::get_stock_log_files();
             foreach ($stock_files as $file) {
                 if (file_exists($file['path'])) {
-                    if (@unlink($file['path'])) {
+                    wp_delete_file($file['path']);
+                    if (!file_exists($file['path'])) {
                         $deleted++;
                     } else {
                         $errors[] = 'Could not delete: ' . $file['filename'];

@@ -29,7 +29,7 @@ class Log_List_Table extends \WP_List_Table {
     }
 
     public function no_items() {
-        _e('No items found.', 'advanced-woo-sync-lite');
+        esc_html_e('No items found.', 'advanced-woo-sync-lite');
     }
 
     public function get_columns() {
@@ -50,8 +50,10 @@ class Log_List_Table extends \WP_List_Table {
         $current_page = $this->get_pagenum();
         $offset = ($current_page - 1) * $per_page;
 
-        $search = isset($_REQUEST['s']) ? sanitize_text_field($_REQUEST['s']) : '';
-        $level_filter = isset($_REQUEST['level_filter']) ? sanitize_text_field($_REQUEST['level_filter']) : '';
+        // phpcs:disable WordPress.Security.NonceVerification.Recommended -- list table filters, read-only.
+        $search = isset($_REQUEST['s']) ? sanitize_text_field(wp_unslash($_REQUEST['s'])) : '';
+        $level_filter = isset($_REQUEST['level_filter']) ? sanitize_text_field(wp_unslash($_REQUEST['level_filter'])) : '';
+        // phpcs:enable WordPress.Security.NonceVerification.Recommended
         
         // Define columns explicitely to avoid rendering issues
         $columns = $this->get_columns();
@@ -72,7 +74,7 @@ class Log_List_Table extends \WP_List_Table {
     }
 
     public function column_default($item, $column_name) {
-        return print_r($item, true);
+        return isset($item[$column_name]) ? esc_html((string) $item[$column_name]) : '';
     }
 
     public function column_timestamp($item) {
@@ -115,11 +117,12 @@ class Log_List_Table extends \WP_List_Table {
     
     public function extra_tablenav($which) {
         if ($which == 'top') {
-            $current_level = isset($_REQUEST['level_filter']) ? sanitize_text_field($_REQUEST['level_filter']) : '';
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- list table filter, read-only.
+            $current_level = isset($_REQUEST['level_filter']) ? sanitize_text_field(wp_unslash($_REQUEST['level_filter'])) : '';
             ?>
             <div class="alignleft actions">
                 <select name="level_filter">
-                    <option value=""><?php _e('All levels', 'advanced-woo-sync-lite'); ?></option>
+                    <option value=""><?php esc_html_e('All levels', 'advanced-woo-sync-lite'); ?></option>
                     <option value="error" <?php selected($current_level, 'error'); ?>>Error</option>
                     <option value="warning" <?php selected($current_level, 'warning'); ?>>Warning</option>
                     <option value="info" <?php selected($current_level, 'info'); ?>>Info</option>

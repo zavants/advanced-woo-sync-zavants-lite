@@ -139,6 +139,7 @@ class Sync_Rules_Engine {
                 'type' => 'info',
                 'context' => 'order_sync',
                 'message' => sprintf(
+                    /* translators: %s: URL of the connected store */
                     __('Stock Sync is active. Orders will sync WITHOUT reducing stock at %s to prevent double reduction.', 'advanced-woo-sync-lite'),
                     $remote_url
                 )
@@ -151,6 +152,7 @@ class Sync_Rules_Engine {
                 'type' => 'warning',
                 'context' => 'stock_sync',
                 'message' => sprintf(
+                    /* translators: %s: URL of the connected store */
                     __('Stock is managed by %s. Stock Sync is disabled for this store.', 'advanced-woo-sync-lite'),
                     $remote_url
                 )

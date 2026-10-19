@@ -55,7 +55,7 @@ class Sync_DB {
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
         return $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table_name WHERE product_id = %d",
+            "SELECT * FROM $table_name WHERE product_id = %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name from $wpdb->prefix.
             $product_id
         ));
     }
@@ -71,7 +71,7 @@ class Sync_DB {
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
         return $wpdb->get_row($wpdb->prepare(
-            "SELECT * FROM $table_name WHERE sku = %s",
+            "SELECT * FROM $table_name WHERE sku = %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name from $wpdb->prefix.
             $sku
         ));
     }
@@ -94,7 +94,7 @@ class Sync_DB {
         // SKU is unique in this table: if the SKU moved to another product, drop the stale row
         // so the insert/update below doesn't fail and leave this product without state.
         $wpdb->query($wpdb->prepare(
-            "DELETE FROM $table_name WHERE sku = %s AND product_id <> %d",
+            "DELETE FROM $table_name WHERE sku = %s AND product_id <> %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name from $wpdb->prefix.
             $sku,
             $product_id
         ));
@@ -161,7 +161,7 @@ class Sync_DB {
         $table_name = $wpdb->prefix . self::TABLE_NAME;
 
         return $wpdb->query($wpdb->prepare(
-            "DELETE FROM $table_name WHERE last_synced_at < %s",
+            "DELETE FROM $table_name WHERE last_synced_at < %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- table name from $wpdb->prefix.
             gmdate('Y-m-d H:i:s', time() - ($days * DAY_IN_SECONDS))
         ));
     }

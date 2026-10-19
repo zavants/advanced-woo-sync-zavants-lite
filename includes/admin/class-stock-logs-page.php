@@ -31,7 +31,7 @@ class Stock_Logs_Page {
         ?>
         <div class="wrap woocommerce">
             <div class="swos-header">
-                <h1 class="wp-heading-inline"><?php _e('Stock Logs - Synchronization', 'advanced-woo-sync-lite'); ?></h1>
+                <h1 class="wp-heading-inline"><?php esc_html_e('Stock Logs - Synchronization', 'advanced-woo-sync-lite'); ?></h1>
                 <hr class="wp-header-end">
             </div>
 
@@ -62,16 +62,16 @@ class Stock_Logs_Page {
             
             <hr>
             
-            <h2><?php _e('Maintenance', 'advanced-woo-sync-lite'); ?></h2>
-            <form method="post" action="<?php echo admin_url('admin-ajax.php'); ?>">
+            <h2><?php esc_html_e('Maintenance', 'advanced-woo-sync-lite'); ?></h2>
+            <form method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
                 <input type="hidden" name="action" value="swos_clear_logs">
                 <input type="hidden" name="log_type" value="stock">
-                <input type="hidden" name="nonce" value="<?php echo wp_create_nonce('swos-clear-logs'); ?>">
+                <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('swos-clear-logs')); ?>">
                 <p>
                     <button type="button" class="button button-secondary swos-clear-logs-btn" data-type="stock">
-                        <?php _e('Delete ALL stock logs', 'advanced-woo-sync-lite'); ?>
+                        <?php esc_html_e('Delete ALL stock logs', 'advanced-woo-sync-lite'); ?>
                     </button>
-                    <span class="description"><?php _e('This action cannot be undone.', 'advanced-woo-sync-lite'); ?></span>
+                    <span class="description"><?php esc_html_e('This action cannot be undone.', 'advanced-woo-sync-lite'); ?></span>
                 </p>
             </form>
             <?php \SWOS\Admin::render_version_footer(); ?>

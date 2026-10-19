@@ -84,7 +84,7 @@ class Premium {
                 <?php endforeach; ?>
             </ul>
             <a href="<?php echo esc_url(self::url($source)); ?>" class="button button-primary button-hero" target="_blank" rel="noopener">
-                <?php _e('Buy Premium', 'advanced-woo-sync-lite'); ?>
+                <?php esc_html_e('Buy Premium', 'advanced-woo-sync-lite'); ?>
             </a>
         </div>
         <?php
